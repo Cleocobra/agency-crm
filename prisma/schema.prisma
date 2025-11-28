@@ -1,0 +1,99 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Salesperson {
+  id        String   @id @default(uuid())
+  name      String
+  phone     String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  clients   Client[]
+}
+
+model Client {
+  id             String   @id @default(uuid())
+  name           String
+  source         String   // LeadSource enum: prospecting, meta, google, referral, other
+  closer         String   // Closer enum: commercial, agency, partner
+  email          String?
+  phone          String?
+  createdAt      DateTime @default(now())
+  
+  salespersonId  String?
+  commissionRate Float?   // Percentage (0-100)
+  
+  salesperson    Salesperson? @relation(fields: [salespersonId], references: [id])
+  contracts      Contract[]
+  transactions   Transaction[]
+}
+
+model Contract {
+  id             String   @id @default(uuid())
+  clientId       String
+  startDate      DateTime
+  endDate        DateTime
+  value          Float
+  totalValue     Float
+  isPrepaid      Boolean  @default(false)
+  durationMonths Int
+  active         Boolean  @default(true)
+  contractUrl    String?
+  
+  client         Client   @relation(fields: [clientId], references: [id])
+  transactions   Transaction[]
+}
+
+model Transaction {
+  id          String   @id @default(uuid())
+  contractId  String
+  clientId    String
+  dueDate     DateTime
+  amount      Float
+  status      String   // TransactionStatus enum: paid, pending, overdue
+  paymentDate DateTime?
+  description String
+  
+  contract    Contract @relation(fields: [contractId], references: [id])
+  client      Client   @relation(fields: [clientId], references: [id])
+}
+
+model User {
+  id       String @id @default(uuid())
+  username String @unique
+  password String
+}
+
+model SystemSettings {
+  id             String @id @default(uuid())
+  appName        String @default("Agency CRM")
+  primaryColor   String @default("#3B82F6")
+  primaryForegroundColor String @default("#FFFFFF")
+  
+  adminUsername  String @default("admin")
+  adminPassword  String @default("123")
+  
+  // Current colors (used for backward compatibility)
+  surfaceColor   String @default("#FFFFFF")
+  backgroundColor String @default("#F1F5F9")
+  borderColor    String @default("#E2E8F0")
+  
+  // Light mode colors
+  lightSurfaceColor   String @default("#FFFFFF")
+  lightBackgroundColor String @default("#F1F5F9")
+  lightBorderColor    String @default("#E2E8F0")
+  
+  // Dark mode colors
+  darkSurfaceColor   String @default("#1E293B")
+  darkBackgroundColor String @default("#0F172A")
+  darkBorderColor    String @default("#334155")
+  
+  logoUrl        String?
+  faviconUrl     String?
+}
+

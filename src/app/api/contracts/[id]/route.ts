@@ -11,14 +11,17 @@ export async function PUT(
         const body = await request.json();
         const { startDate, durationMonths, value, contractUrl } = body;
 
+        // Parse startDate string to Date object
+        const start = new Date(startDate);
+
         // Calculate new endDate
-        const newEndDate = format(addMonths(new Date(startDate), durationMonths), 'yyyy-MM-dd');
+        const end = addMonths(start, durationMonths);
 
         const updatedContract = await prisma.contract.update({
             where: { id },
             data: {
-                startDate,
-                endDate: newEndDate,
+                startDate: start,
+                endDate: end,
                 durationMonths,
                 value,
                 contractUrl,

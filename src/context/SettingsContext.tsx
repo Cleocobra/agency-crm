@@ -174,8 +174,9 @@ export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({ chil
             surfaceColor: '#1E293B',
             backgroundColor: '#0F172A',
             borderColor: '#334155',
-            adminUsername: 'admin',
-            adminPassword: '123',
+            // Preserve current credentials
+            adminUsername: settings.adminUsername,
+            adminPassword: settings.adminPassword,
             lightSurfaceColor: '#FFFFFF',
             lightBackgroundColor: '#F1F5F9',
             lightBorderColor: '#E2E8F0',

@@ -125,9 +125,9 @@ export default function DashboardPage() {
         <div className="space-y-8">
             {/* Month Selector */}
             <div className="flex items-center justify-between">
-                <h2 className="text-2xl font-bold text-text">Dashboard Financeiro</h2>
+                <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100">Dashboard Financeiro</h2>
                 <div className="flex items-center space-x-2 bg-surface p-1.5 rounded-lg border border-border">
-                    <button onClick={handlePreviousMonth} className="p-2 hover:bg-black/5 dark:hover:bg-white/5 rounded-lg text-textMuted hover:text-text transition-colors">
+                    <button onClick={handlePreviousMonth} className="p-2 hover:bg-black/5 dark:hover:bg-white/5 rounded-lg text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition-colors">
                         <ChevronLeft className="w-5 h-5" />
                     </button>
 
@@ -140,11 +140,11 @@ export default function DashboardPage() {
                                     setCurrentDate(parseISO(e.target.value + '-01'));
                                 }
                             }}
-                            className="bg-transparent text-lg font-semibold text-center text-text border-none focus:outline-none cursor-pointer"
+                            className="bg-transparent text-lg font-semibold text-center text-gray-900 dark:text-gray-100 border-none focus:outline-none cursor-pointer"
                         />
                     </div>
 
-                    <button onClick={handleNextMonth} className="p-2 hover:bg-black/5 dark:hover:bg-white/5 rounded-lg text-textMuted hover:text-text transition-colors">
+                    <button onClick={handleNextMonth} className="p-2 hover:bg-black/5 dark:hover:bg-white/5 rounded-lg text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition-colors">
                         <ChevronRight className="w-5 h-5" />
                     </button>
                 </div>
@@ -202,7 +202,7 @@ export default function DashboardPage() {
                                     'px-3 py-1.5 rounded-md text-sm font-medium transition-colors',
                                     filter === f
                                         ? 'bg-primary text-primaryForeground'
-                                        : 'text-textMuted hover:text-text hover:bg-black/5 dark:hover:bg-white/5'
+                                        : 'text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 hover:bg-black/5 dark:hover:bg-white/5'
                                 )}
                             >
                                 {f === 'all' ? 'Todos' : f === 'paid' ? 'Pagos' : f === 'pending' ? 'Pendentes' : 'Atrasados'}
@@ -213,7 +213,7 @@ export default function DashboardPage() {
 
                 <div className="overflow-x-auto">
                     <table className="w-full text-left">
-                        <thead className="bg-background/50 text-textMuted text-sm uppercase tracking-wider">
+                        <thead className="bg-background/50 text-gray-500 dark:text-gray-400 text-sm uppercase tracking-wider">
                             <tr>
                                 <th className="px-6 py-4 font-medium">Vencimento</th>
                                 <th className="px-6 py-4 font-medium">Cliente</th>
@@ -281,7 +281,7 @@ export default function DashboardPage() {
                             })}
                             {filteredTransactions.length === 0 && (
                                 <tr>
-                                    <td colSpan={6} className="px-6 py-8 text-center text-textMuted">
+                                    <td colSpan={6} className="px-6 py-8 text-center text-gray-500 dark:text-gray-400">
                                         Nenhum lançamento encontrado para este mês.
                                     </td>
                                 </tr>
@@ -300,8 +300,8 @@ const StatCard = ({ title, value, icon: Icon, color, bg }: any) => (
             <Icon className="w-5 h-5" />
         </div>
         <div>
-            <p className="text-xs text-textMuted font-medium truncate">{title}</p>
-            <p className="text-xl font-bold text-text truncate">{formatCurrency(value)}</p>
+            <p className="text-xs text-gray-500 dark:text-gray-400 font-medium truncate">{title}</p>
+            <p className="text-xl font-bold text-gray-900 dark:text-gray-100 truncate">{formatCurrency(value)}</p>
         </div>
     </div>
 );

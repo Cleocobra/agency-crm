@@ -10,12 +10,44 @@ export async function GET() {
                         salesperson: true
                     }
                 },
-                contract: true
+                contract: {
+                    select: {
+                        isPrepaid: true
+                    }
+                }
             },
-            orderBy: { dueDate: 'asc' },
+            orderBy: {
+                dueDate: 'asc',
+            },
         });
         return NextResponse.json(transactions);
     } catch (error) {
+        console.error('Failed to fetch transactions', error);
         return NextResponse.json({ error: 'Failed to fetch transactions' }, { status: 500 });
+    }
+}
+
+export async function POST(request: Request) {
+    try {
+        const body = await request.json();
+
+        // Basic validation could go here
+
+        const transaction = await prisma.transaction.create({
+            data: {
+                contractId: body.contractId,
+                clientId: body.clientId,
+                dueDate: new Date(body.dueDate),
+                amount: parseFloat(body.amount),
+                status: body.status || 'pending',
+                description: body.description,
+                paymentDate: body.paymentDate ? new Date(body.paymentDate) : null,
+            },
+        });
+
+        return NextResponse.json(transaction);
+    } catch (error) {
+        console.error('Failed to create transaction', error);
+        return NextResponse.json({ error: 'Failed to create transaction' }, { status: 500 });
     }
 }

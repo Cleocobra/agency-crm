@@ -2,13 +2,23 @@
 
 import React, { useMemo, useState, useEffect } from 'react';
 import { formatCurrency, formatDate, formatMonth } from '@/utils/format';
-import { ArrowUpCircle, CheckCircle2, Clock, AlertCircle, ChevronLeft, ChevronRight } from 'lucide-react';
+import { ArrowUpCircle, CheckCircle2, Clock, AlertCircle, ChevronLeft, ChevronRight, Wallet } from 'lucide-react';
 import clsx from 'clsx';
 import { isSameMonth, parseISO, isBefore, startOfDay, addMonths, format } from 'date-fns';
 
-// Types (should be imported from shared types but defining here for speed if needed, or import from types/index)
-// We copied types to src/types, so we can import.
 import { Transaction, Client } from '@/types';
+
+// Helper to fix timezone issues when displaying pure dates
+const fixDate = (date: string | Date) => {
+    if (typeof date === 'string' && date.includes('T')) {
+        return new Date(date);
+    }
+    if (typeof date === 'string') {
+        // Append T12:00:00 to avoid timezone rollback to previous day
+        return new Date(date + 'T12:00:00');
+    }
+    return new Date(date);
+};
 
 export default function DashboardPage() {
     const [transactions, setTransactions] = useState<Transaction[]>([]);
@@ -18,7 +28,7 @@ export default function DashboardPage() {
 
     const fetchData = async () => {
         try {
-            const res = await fetch('/api/transactions');
+            const res = await fetch('/api/transactions', { cache: 'no-store' });
             if (res.ok) {
                 const data = await res.json();
                 setTransactions(data);
@@ -62,38 +72,53 @@ export default function DashboardPage() {
 
     const stats = useMemo(() => {
         const currentMonthTransactions = transactions.filter(t =>
-            isSameMonth(parseISO(t.dueDate as string), currentDate)
+            isSameMonth(fixDate(t.dueDate as string), currentDate)
         );
 
         const total = currentMonthTransactions.reduce((acc, t) => acc + t.amount, 0);
-        const paid = currentMonthTransactions.filter(t => t.status === 'paid').reduce((acc, t) => acc + t.amount, 0);
-        const pending = currentMonthTransactions.filter(t => t.status === 'pending').reduce((acc, t) => acc + t.amount, 0);
 
-        // Global overdue (not just this month)
-        const overdueTxs = transactions.filter(t =>
-            t.status === 'pending' && isBefore(parseISO(t.dueDate as string), startOfDay(new Date()))
-        );
-        const overdue = overdueTxs.reduce((acc, t) => acc + t.amount, 0);
+        const paid = currentMonthTransactions
+            .filter(t => t.status === 'paid')
+            .reduce((acc, t) => acc + t.amount, 0);
 
-        return { total, paid, pending, overdue };
+        const pending = currentMonthTransactions
+            .filter(t => t.status === 'pending')
+            .reduce((acc, t) => acc + t.amount, 0);
+
+        // Overdue ONLY within this month
+        // Logic: Status is pending AND Due Date is before Today (Start of Day)
+        const overdue = currentMonthTransactions
+            .filter(t =>
+                t.status === 'pending' &&
+                isBefore(fixDate(t.dueDate as string), startOfDay(new Date()))
+            )
+            .reduce((acc, t) => acc + t.amount, 0);
+
+        // Prepaid Receivables (Recebíveis Antecipados)
+        // Sum of transactions in this month where contract is prepaid
+        const prepaid = currentMonthTransactions
+            .filter(t => (t as any).contract?.isPrepaid)
+            .reduce((acc, t) => acc + t.amount, 0);
+
+        return { total, paid, pending, overdue, prepaid };
     }, [transactions, currentDate]);
 
     const filteredTransactions = useMemo(() => {
-        let txs = transactions.filter(t => isSameMonth(parseISO(t.dueDate as string), currentDate));
+        let txs = transactions.filter(t => isSameMonth(fixDate(t.dueDate as string), currentDate));
 
         // Sort by due date
-        txs.sort((a, b) => new Date(a.dueDate as string).getTime() - new Date(b.dueDate as string).getTime());
+        txs.sort((a, b) => fixDate(a.dueDate as string).getTime() - fixDate(b.dueDate as string).getTime());
 
         if (filter === 'all') return txs;
         if (filter === 'overdue') {
             const now = startOfDay(new Date());
-            return txs.filter(t => t.status === 'pending' && isBefore(parseISO(t.dueDate as string), now));
+            return txs.filter(t => t.status === 'pending' && isBefore(fixDate(t.dueDate as string), now));
         }
         return txs.filter(t => t.status === filter);
     }, [transactions, filter, currentDate]);
 
     if (loading) {
-        return <div className="p-8 text-center">Carregando dashboard...</div>;
+        return <div className="p-8 text-center text-textMuted animate-pulse">Carregando dashboard...</div>;
     }
 
     return (
@@ -115,14 +140,7 @@ export default function DashboardPage() {
                                     setCurrentDate(parseISO(e.target.value + '-01'));
                                 }
                             }}
-                            onClick={(e) => {
-                                try {
-                                    e.currentTarget.showPicker();
-                                } catch (error) {
-                                    // Fallback
-                                }
-                            }}
-                            className="bg-transparent text-lg font-semibold text-center text-text border border-border rounded-lg px-4 py-1 focus:outline-none focus:border-primary cursor-pointer [&::-webkit-calendar-picker-indicator]:filter dark:[&::-webkit-calendar-picker-indicator]:invert [&::-webkit-calendar-picker-indicator]:opacity-50 hover:[&::-webkit-calendar-picker-indicator]:opacity-100"
+                            className="bg-transparent text-lg font-semibold text-center text-text border-none focus:outline-none cursor-pointer"
                         />
                     </div>
 
@@ -133,7 +151,7 @@ export default function DashboardPage() {
             </div>
 
             {/* Stats Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
                 <StatCard
                     title="Total Mensal"
                     value={stats.total}
@@ -149,6 +167,13 @@ export default function DashboardPage() {
                     bg="bg-green-400/10"
                 />
                 <StatCard
+                    title="Antecipado"
+                    value={stats.prepaid}
+                    icon={Wallet}
+                    color="text-purple-400"
+                    bg="bg-purple-400/10"
+                />
+                <StatCard
                     title="Pendente"
                     value={stats.pending}
                     icon={Clock}
@@ -156,7 +181,7 @@ export default function DashboardPage() {
                     bg="bg-yellow-400/10"
                 />
                 <StatCard
-                    title="Em Atraso (Geral)"
+                    title="Em Atraso (Mês)"
                     value={stats.overdue}
                     icon={AlertCircle}
                     color="text-red-400"
@@ -200,19 +225,25 @@ export default function DashboardPage() {
                         </thead>
                         <tbody className="divide-y divide-border">
                             {filteredTransactions.map((t) => {
-                                const isOverdue = t.status === 'pending' && isBefore(parseISO(t.dueDate as string), startOfDay(new Date()));
-                                // Client name might be in t.client if we included it in API response
-                                // The API /api/transactions includes client: true
+                                const isOverdue = t.status === 'pending' && isBefore(fixDate(t.dueDate as string), startOfDay(new Date()));
                                 const clientName = (t as any).client?.name || 'Cliente Desconhecido';
+                                const isPrepaid = (t as any).contract?.isPrepaid;
 
                                 return (
                                     <tr key={t.id} className="hover:bg-black/5 dark:hover:bg-white/5 transition-colors">
                                         <td className="px-6 py-4 text-sm font-medium">
-                                            {formatDate(t.dueDate as string)}
+                                            {formatDate(fixDate(t.dueDate as string).toISOString())}
                                         </td>
                                         <td className="px-6 py-4 text-sm text-textMuted">
                                             <div className="flex flex-col">
-                                                <span className="text-sm font-bold text-text">{clientName}</span>
+                                                <div className="flex items-center gap-2">
+                                                    <span className="text-sm font-bold text-text">{clientName}</span>
+                                                    {isPrepaid && (
+                                                        <span className="px-1.5 py-0.5 rounded text-[10px] font-bold uppercase bg-purple-500/10 text-purple-400">
+                                                            Antecipado
+                                                        </span>
+                                                    )}
+                                                </div>
                                                 <div className="flex items-center gap-1 text-xs text-textMuted mt-0.5">
                                                     <span className={clsx(
                                                         "px-1.5 py-0.5 rounded-full text-[10px] font-medium uppercase tracking-wide",
@@ -266,13 +297,13 @@ export default function DashboardPage() {
 }
 
 const StatCard = ({ title, value, icon: Icon, color, bg }: any) => (
-    <div className="bg-surface p-6 rounded-xl border border-border flex items-center space-x-4">
-        <div className={`p-3 rounded-lg ${bg} ${color}`}>
-            <Icon className="w-6 h-6" />
+    <div className="bg-surface p-4 rounded-xl border border-border flex items-center space-x-3">
+        <div className={`p-2.5 rounded-lg ${bg} ${color}`}>
+            <Icon className="w-5 h-5" />
         </div>
         <div>
-            <p className="text-sm text-textMuted font-medium">{title}</p>
-            <p className="text-2xl font-bold text-text">{formatCurrency(value)}</p>
+            <p className="text-xs text-textMuted font-medium truncate">{title}</p>
+            <p className="text-xl font-bold text-text truncate">{formatCurrency(value)}</p>
         </div>
     </div>
 );

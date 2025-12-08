@@ -231,7 +231,7 @@ export default function DashboardPage() {
 
                                 return (
                                     <tr key={t.id} className="hover:bg-black/5 dark:hover:bg-white/5 transition-colors">
-                                        <td className="px-6 py-4 text-sm font-medium text-text">
+                                        <td className="px-6 py-4 text-sm font-medium">
                                             {formatDate(fixDate(t.dueDate as string).toISOString())}
                                         </td>
                                         <td className="px-6 py-4 text-sm">
@@ -257,10 +257,10 @@ export default function DashboardPage() {
                                                 </div>
                                             </div>
                                         </td>
-                                        <td className="px-6 py-4 text-sm text-text">
+                                        <td className="px-6 py-4 text-sm text-textMuted">
                                             {t.description}
                                         </td>
-                                        <td className="px-6 py-4 text-sm font-medium text-text">
+                                        <td className="px-6 py-4 text-sm font-medium">
                                             {formatCurrency(t.amount)}
                                         </td>
                                         <td className="px-6 py-4">

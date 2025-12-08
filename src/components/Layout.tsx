@@ -29,7 +29,7 @@ export const Layout: React.FC<LayoutProps> = ({ children, onOpenNewContract, onL
     };
 
     return (
-        <div className="flex h-screen bg-background text-text transition-colors duration-300">
+        <div className="flex h-screen bg-background text-gray-900 dark:text-gray-100 transition-colors duration-300">
             {/* Sidebar */}
             <aside className="w-64 bg-surface border-r border-border flex flex-col transition-colors duration-300">
                 <div className="p-6 flex items-center justify-center">
@@ -53,7 +53,7 @@ export const Layout: React.FC<LayoutProps> = ({ children, onOpenNewContract, onL
                                     'flex items-center w-full px-4 py-3 rounded-lg transition-all duration-200',
                                     isActive
                                         ? 'bg-primary/10 text-primary'
-                                        : 'text-textMuted hover:bg-slate-700/50 hover:text-text'
+                                        : 'text-gray-500 dark:text-gray-400 hover:bg-slate-700/50 hover:text-gray-900 dark:hover:text-gray-100'
                                 )}
                             >
                                 <item.icon className="w-5 h-5 mr-3" />
@@ -66,7 +66,7 @@ export const Layout: React.FC<LayoutProps> = ({ children, onOpenNewContract, onL
                 <div className="p-4 border-t border-border space-y-4">
                     <button
                         onClick={toggleDarkMode}
-                        className="flex items-center w-full px-4 py-2 rounded-lg text-textMuted hover:bg-slate-700/50 hover:text-text transition-all duration-200"
+                        className="flex items-center w-full px-4 py-2 rounded-lg text-gray-500 dark:text-gray-400 hover:bg-slate-700/50 hover:text-gray-900 dark:hover:text-gray-100 transition-all duration-200"
                     >
                         {isDarkMode ? <Sun className="w-5 h-5 mr-3" /> : <Moon className="w-5 h-5 mr-3" />}
                         <span className="font-medium">{isDarkMode ? 'Modo Claro' : 'Modo Escuro'}</span>
@@ -74,7 +74,7 @@ export const Layout: React.FC<LayoutProps> = ({ children, onOpenNewContract, onL
 
                     <button
                         onClick={handleLogout}
-                        className="flex items-center w-full px-4 py-2 rounded-lg text-textMuted hover:bg-red-500/10 hover:text-red-500 transition-all duration-200"
+                        className="flex items-center w-full px-4 py-2 rounded-lg text-gray-500 dark:text-gray-400 hover:bg-red-500/10 hover:text-red-500 transition-all duration-200"
                     >
                         <LogOut className="w-5 h-5 mr-3" />
                         <span className="font-medium">Sair</span>

@@ -75,13 +75,13 @@ export const EditContractModal: React.FC<EditContractModalProps> = ({ isOpen, on
             <div className="bg-surface border border-border w-full max-w-md rounded-xl shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-200">
                 <div className="flex justify-between items-center p-6 border-b border-border bg-background/50">
                     <div>
-                        <h2 className="text-xl font-semibold text-text flex items-center gap-2">
+                        <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100 flex items-center gap-2">
                             <FileText className="w-5 h-5 text-primary" />
                             Editar Contrato
                         </h2>
-                        <p className="text-xs text-textMuted mt-1">Atualize os dados e vencimento</p>
+                        <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">Atualize os dados e vencimento</p>
                     </div>
-                    <button onClick={onClose} className="text-textMuted hover:text-text transition-colors p-1 hover:bg-background rounded-full">
+                    <button onClick={onClose} className="text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition-colors p-1 hover:bg-background rounded-full">
                         <X className="w-5 h-5" />
                     </button>
                 </div>
@@ -90,36 +90,36 @@ export const EditContractModal: React.FC<EditContractModalProps> = ({ isOpen, on
 
                     <div className="grid grid-cols-2 gap-4">
                         <div className="space-y-1.5">
-                            <label className="block text-xs font-semibold text-textMuted uppercase tracking-wider">Início</label>
+                            <label className="block text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Início</label>
                             <div className="relative">
-                                <Calendar className="absolute left-3 top-1/2 transform -translate-y-1/2 text-textMuted w-4 h-4" />
+                                <Calendar className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 dark:text-gray-400 w-4 h-4" />
                                 <input
                                     type="date"
                                     required
                                     value={startDate}
                                     onChange={(e) => setStartDate(e.target.value)}
-                                    className="w-full pl-9 pr-3 py-2.5 bg-background border border-border rounded-lg text-text focus:outline-none focus:ring-2 focus:ring-primary/50 text-sm transition-all"
+                                    className="w-full pl-9 pr-3 py-2.5 bg-background border border-border rounded-lg text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-primary/50 text-sm transition-all"
                                 />
                             </div>
                         </div>
 
                         <div className="space-y-1.5">
-                            <label className="block text-xs font-semibold text-textMuted uppercase tracking-wider">Duração (Meses)</label>
+                            <label className="block text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Duração (Meses)</label>
                             <input
                                 type="number"
                                 min="1"
                                 required
                                 value={durationMonths}
                                 onChange={(e) => setDurationMonths(Number(e.target.value))}
-                                className="w-full px-3 py-2.5 bg-background border border-border rounded-lg text-text focus:outline-none focus:ring-2 focus:ring-primary/50 text-sm transition-all"
+                                className="w-full px-3 py-2.5 bg-background border border-border rounded-lg text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-primary/50 text-sm transition-all"
                             />
                         </div>
                     </div>
 
                     <div className="space-y-1.5">
-                        <label className="block text-xs font-semibold text-textMuted uppercase tracking-wider">Valor Mensal (R$)</label>
+                        <label className="block text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Valor Mensal (R$)</label>
                         <div className="relative">
-                            <DollarSign className="absolute left-3 top-1/2 transform -translate-y-1/2 text-textMuted w-4 h-4" />
+                            <DollarSign className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 dark:text-gray-400 w-4 h-4" />
                             <input
                                 type="number"
                                 min="0"
@@ -127,21 +127,21 @@ export const EditContractModal: React.FC<EditContractModalProps> = ({ isOpen, on
                                 required
                                 value={value}
                                 onChange={(e) => setValue(e.target.value)}
-                                className="w-full pl-9 pr-3 py-2.5 bg-background border border-border rounded-lg text-text focus:outline-none focus:ring-2 focus:ring-primary/50 text-sm transition-all font-medium"
+                                className="w-full pl-9 pr-3 py-2.5 bg-background border border-border rounded-lg text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-primary/50 text-sm transition-all font-medium"
                                 placeholder="0.00"
                             />
                         </div>
                     </div>
 
                     <div className="space-y-1.5">
-                        <label className="block text-xs font-semibold text-textMuted uppercase tracking-wider">Link do Contrato</label>
+                        <label className="block text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Link do Contrato</label>
                         <div className="relative">
-                            <LinkIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 text-textMuted w-4 h-4" />
+                            <LinkIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 dark:text-gray-400 w-4 h-4" />
                             <input
                                 type="text"
                                 value={contractUrl}
                                 onChange={(e) => setContractUrl(e.target.value)}
-                                className="w-full pl-9 pr-3 py-2.5 bg-background border border-border rounded-lg text-text focus:outline-none focus:ring-2 focus:ring-primary/50 text-sm transition-all"
+                                className="w-full pl-9 pr-3 py-2.5 bg-background border border-border rounded-lg text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-primary/50 text-sm transition-all"
                                 placeholder="https://..."
                             />
                         </div>

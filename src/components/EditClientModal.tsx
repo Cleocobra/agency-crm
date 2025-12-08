@@ -81,31 +81,31 @@ export const EditClientModal: React.FC<EditClientModalProps> = ({ isOpen, onClos
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
             <div className="bg-surface border border-border w-full max-w-lg rounded-xl shadow-2xl overflow-hidden animate-fadeIn">
                 <div className="flex justify-between items-center p-6 border-b border-border">
-                    <h2 className="text-xl font-semibold text-text">Editar Cliente</h2>
-                    <button onClick={onClose} className="text-textMuted hover:text-text">
+                    <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100">Editar Cliente</h2>
+                    <button onClick={onClose} className="text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100">
                         <X className="w-6 h-6" />
                     </button>
                 </div>
 
                 <form onSubmit={handleSubmit} className="p-6 space-y-4">
                     <div>
-                        <label className="block text-sm font-medium text-textMuted mb-1">Nome do Cliente</label>
+                        <label className="block text-sm font-medium text-gray-500 dark:text-gray-400 mb-1">Nome do Cliente</label>
                         <input
                             type="text"
                             required
                             value={name}
                             onChange={(e) => setName(e.target.value)}
-                            className="w-full bg-background border border-border rounded-lg px-4 py-2 text-text focus:outline-none focus:ring-2 focus:ring-primary"
+                            className="w-full bg-background border border-border rounded-lg px-4 py-2 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-primary"
                         />
                     </div>
 
                     <div className="grid grid-cols-2 gap-4">
                         <div>
-                            <label className="block text-sm font-medium text-textMuted mb-1">Origem do Lead</label>
+                            <label className="block text-sm font-medium text-gray-500 dark:text-gray-400 mb-1">Origem do Lead</label>
                             <select
                                 value={source}
                                 onChange={(e) => setSource(e.target.value)}
-                                className="w-full bg-background border border-border rounded-lg px-4 py-2 text-text focus:outline-none focus:ring-2 focus:ring-primary"
+                                className="w-full bg-background border border-border rounded-lg px-4 py-2 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-primary"
                             >
                                 <option value="prospecting">Prospecção</option>
                                 <option value="meta">Meta Ads</option>
@@ -114,11 +114,11 @@ export const EditClientModal: React.FC<EditClientModalProps> = ({ isOpen, onClos
                             </select>
                         </div>
                         <div>
-                            <label className="block text-sm font-medium text-textMuted mb-1">Fechamento</label>
+                            <label className="block text-sm font-medium text-gray-500 dark:text-gray-400 mb-1">Fechamento</label>
                             <select
                                 value={closer}
                                 onChange={(e) => setCloser(e.target.value)}
-                                className="w-full bg-background border border-border rounded-lg px-4 py-2 text-text focus:outline-none focus:ring-2 focus:ring-primary"
+                                className="w-full bg-background border border-border rounded-lg px-4 py-2 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-primary"
                             >
                                 <option value="commercial">Comercial</option>
                                 <option value="agency">Agência</option>
@@ -130,11 +130,11 @@ export const EditClientModal: React.FC<EditClientModalProps> = ({ isOpen, onClos
                     {closer === 'commercial' && (
                         <div className="grid grid-cols-2 gap-4 animate-fadeIn">
                             <div>
-                                <label className="block text-sm font-medium text-textMuted mb-1">Vendedor</label>
+                                <label className="block text-sm font-medium text-gray-500 dark:text-gray-400 mb-1">Vendedor</label>
                                 <select
                                     value={selectedSalespersonId}
                                     onChange={(e) => setSelectedSalespersonId(e.target.value)}
-                                    className="w-full bg-background border border-border rounded-lg px-4 py-2 text-text focus:outline-none focus:ring-2 focus:ring-primary"
+                                    className="w-full bg-background border border-border rounded-lg px-4 py-2 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-primary"
                                     required={closer === 'commercial'}
                                 >
                                     <option value="">Selecione...</option>
@@ -144,7 +144,7 @@ export const EditClientModal: React.FC<EditClientModalProps> = ({ isOpen, onClos
                                 </select>
                             </div>
                             <div>
-                                <label className="block text-sm font-medium text-textMuted mb-1">Comissão (%)</label>
+                                <label className="block text-sm font-medium text-gray-500 dark:text-gray-400 mb-1">Comissão (%)</label>
                                 <input
                                     type="number"
                                     min="0"
@@ -152,7 +152,7 @@ export const EditClientModal: React.FC<EditClientModalProps> = ({ isOpen, onClos
                                     step="0.1"
                                     value={commissionRate}
                                     onChange={(e) => setCommissionRate(e.target.value)}
-                                    className="w-full bg-background border border-border rounded-lg px-4 py-2 text-text focus:outline-none focus:ring-2 focus:ring-primary"
+                                    className="w-full bg-background border border-border rounded-lg px-4 py-2 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-primary"
                                     placeholder="Ex: 10"
                                     required={closer === 'commercial'}
                                 />

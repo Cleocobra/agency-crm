@@ -72,10 +72,8 @@ export default function LoginPage() {
                         </div>
                     </div>
 
-                    <div className="flex justify-end mt-2 relative z-10">
-                        <Link href="/forgot-password" className="text-sm text-primary hover:underline font-medium">
-                            Esqueci a senha
-                        </Link>
+                    <div className="flex justify-end mt-2 relative z-10" style={{ display: 'none' }}>
+                        {/* Removido daqui */}
                     </div>
 
                     {error && (
@@ -90,6 +88,12 @@ export default function LoginPage() {
                     >
                         Entrar
                     </button>
+
+                    <div className="text-center mt-4">
+                        <Link href="/forgot-password" className="text-sm text-primary hover:underline font-medium inline-block p-2">
+                            Esqueci a senha
+                        </Link>
+                    </div>
                 </form>
             </div>
         </div>

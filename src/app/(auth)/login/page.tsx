@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { Lock, User } from 'lucide-react';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 export default function LoginPage() {
     const [username, setUsername] = useState('');
@@ -72,9 +73,9 @@ export default function LoginPage() {
                     </div>
 
                     <div className="flex justify-end -mt-4">
-                        <a href="/forgot-password" className="text-sm text-primary hover:underline font-medium">
+                        <Link href="/forgot-password" className="text-sm text-primary hover:underline font-medium">
                             Esqueci a senha
-                        </a>
+                        </Link>
                     </div>
 
                     {error && (

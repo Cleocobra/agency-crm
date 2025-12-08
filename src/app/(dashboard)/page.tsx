@@ -192,7 +192,7 @@ export default function DashboardPage() {
             {/* Transactions List */}
             <div className="bg-surface rounded-xl border border-border overflow-hidden">
                 <div className="p-6 border-b border-border flex justify-between items-center">
-                    <h2 className="text-xl font-semibold text-text">Lançamentos de {formatMonth(currentDate.toISOString())}</h2>
+                    <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100">Lançamentos de {formatMonth(currentDate.toISOString())}</h2>
                     <div className="flex space-x-2">
                         {(['all', 'paid', 'pending', 'overdue'] as const).map((f) => (
                             <button
@@ -231,12 +231,12 @@ export default function DashboardPage() {
 
                                 return (
                                     <tr key={t.id} className="hover:bg-black/5 dark:hover:bg-white/5 transition-colors">
-                                        <td className="px-6 py-4 text-sm font-medium text-text">
+                                        <td className="px-6 py-4 text-sm font-medium text-gray-900 dark:text-gray-100">
                                             {formatDate(fixDate(t.dueDate as string).toISOString())}
                                         </td>
                                         <td className="px-6 py-4 text-sm">
                                             <div className="flex flex-col">
-                                                <span className="text-sm font-bold text-text">{clientName}</span>
+                                                <span className="text-sm font-bold text-gray-900 dark:text-gray-100">{clientName}</span>
                                                 <div className="flex items-center gap-2 mt-1">
                                                     <span className={clsx(
                                                         "px-1.5 py-0.5 rounded-full text-[10px] font-medium uppercase tracking-wide",
@@ -247,7 +247,7 @@ export default function DashboardPage() {
                                                         {(t as any).client?.closer === 'commercial' ? 'Comercial' : (t as any).client?.closer === 'agency' ? 'Agência' : 'Parceiro'}
                                                     </span>
                                                     {(t as any).client?.closer === 'commercial' && (t as any).client?.salesperson?.name && (
-                                                        <span className="text-xs text-textMuted">• {(t as any).client.salesperson.name}</span>
+                                                        <span className="text-xs text-gray-500 dark:text-gray-400">• {(t as any).client.salesperson.name}</span>
                                                     )}
                                                     {isPrepaid && (
                                                         <span className="px-1.5 py-0.5 rounded-full text-[10px] font-bold uppercase bg-purple-500/10 text-purple-400">
@@ -257,10 +257,10 @@ export default function DashboardPage() {
                                                 </div>
                                             </div>
                                         </td>
-                                        <td className="px-6 py-4 text-sm text-textMuted">
+                                        <td className="px-6 py-4 text-sm text-gray-500 dark:text-gray-400">
                                             {t.description}
                                         </td>
-                                        <td className="px-6 py-4 text-sm font-medium text-text">
+                                        <td className="px-6 py-4 text-sm font-medium text-gray-900 dark:text-gray-100">
                                             {formatCurrency(t.amount)}
                                         </td>
                                         <td className="px-6 py-4">

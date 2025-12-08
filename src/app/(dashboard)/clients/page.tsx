@@ -2,15 +2,13 @@
 
 import React, { useMemo, useState, useEffect } from 'react';
 import { formatCurrency, formatDate } from '@/utils/format';
-import { Search, Building2, User, Link as LinkIcon, Edit, PlusCircle } from 'lucide-react';
+import { Search, Building2, User, Link as LinkIcon, Edit, PlusCircle, Trash2 } from 'lucide-react';
 import { parseISO, isAfter } from 'date-fns';
 import { AddContractModal } from '@/components/AddContractModal';
 import type { Client, Contract, Transaction } from '@/types';
 
 import { EditClientModal } from '@/components/EditClientModal';
-
-// Placeholder for Edit Contract Modal if not implemented yet
-const EditContractModal = ({ isOpen, onClose, contract }: any) => isOpen ? <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50"><div className="bg-white p-4 rounded">Edit Contract (Not Implemented) <button onClick={onClose}>Close</button></div></div> : null;
+import { EditContractModal } from '@/components/EditContractModal';
 
 export default function ClientsPage() {
     const [clients, setClients] = useState<Client[]>([]);
@@ -45,6 +43,25 @@ export default function ClientsPage() {
     useEffect(() => {
         fetchData();
     }, []);
+
+    const handleDeleteClient = async (clientId: string) => {
+        if (!confirm('Tem certeza que deseja excluir este cliente? Todos os contratos e histórico serão perdidos permanentemente.')) return;
+
+        try {
+            const res = await fetch(`/api/clients/${clientId}`, {
+                method: 'DELETE',
+            });
+
+            if (res.ok) {
+                fetchData();
+            } else {
+                alert('Erro ao excluir cliente.');
+            }
+        } catch (error) {
+            console.error('Failed to delete client', error);
+            alert('Erro ao excluir cliente.');
+        }
+    };
 
     const clientsWithStats = useMemo(() => {
         return clients.map(client => {
@@ -96,7 +113,7 @@ export default function ClientsPage() {
     };
 
     if (loading) {
-        return <div className="p-8 text-center">Carregando clientes...</div>;
+        return <div className="p-8 text-center text-textMuted animate-pulse">Carregando clientes...</div>;
     }
 
     return (
@@ -205,13 +222,20 @@ export default function ClientsPage() {
                                 >
                                     <PlusCircle className="w-4 h-4" />
                                 </button>
+                                <button
+                                    onClick={() => handleDeleteClient(client.id)}
+                                    className="p-2 text-textMuted hover:text-red-500 hover:bg-red-500/10 rounded-lg transition-colors"
+                                    title="Excluir Cliente"
+                                >
+                                    <Trash2 className="w-4 h-4" />
+                                </button>
                             </div>
                         </div>
                     </div>
                 ))}
 
                 {filteredClients.length === 0 && (
-                    <div className="text-center py-12 text-textMuted">
+                    <div className="text-center py-12 text-textMuted bg-surface/50 border border-border/50 rounded-xl border-dashed">
                         Nenhum cliente encontrado.
                     </div>
                 )}
@@ -239,6 +263,9 @@ export default function ClientsPage() {
                 isOpen={!!editingContract}
                 onClose={() => setEditingContract(null)}
                 contract={editingContract}
+                onSuccess={() => {
+                    fetchData();
+                }}
             />
         </div>
     );

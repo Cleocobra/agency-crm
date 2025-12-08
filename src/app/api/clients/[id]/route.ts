@@ -37,9 +37,21 @@ export async function DELETE(
 ) {
     try {
         const { id } = await params;
-        await prisma.client.delete({
-            where: { id },
-        });
+        // Use transaction to delete related records first (Cascade Delete)
+        await prisma.$transaction([
+            // 1. Delete all transactions related to this client
+            prisma.transaction.deleteMany({
+                where: { clientId: id }
+            }),
+            // 2. Delete all contracts related to this client
+            prisma.contract.deleteMany({
+                where: { clientId: id }
+            }),
+            // 3. Finally, delete the client
+            prisma.client.delete({
+                where: { id },
+            })
+        ]);
 
         return NextResponse.json({ success: true });
     } catch (error) {

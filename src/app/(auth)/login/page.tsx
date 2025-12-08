@@ -89,12 +89,13 @@ export default function LoginPage() {
                         Entrar
                     </button>
 
-                    <div className="text-center mt-4">
-                        <Link href="/forgot-password" className="text-sm text-primary hover:underline font-medium inline-block p-2">
-                            Esqueci a senha
-                        </Link>
-                    </div>
                 </form>
+
+                <div className="text-center mt-6">
+                    <Link href="/forgot-password" className="text-sm text-primary hover:underline font-medium inline-flex items-center gap-1 p-2">
+                        Esqueci a senha
+                    </Link>
+                </div>
             </div>
         </div>
     );

@@ -192,7 +192,7 @@ export default function DashboardPage() {
             {/* Transactions List */}
             <div className="bg-surface rounded-xl border border-border overflow-hidden">
                 <div className="p-6 border-b border-border flex justify-between items-center">
-                    <h2 className="text-xl font-semibold">Lançamentos de {formatMonth(currentDate.toISOString())}</h2>
+                    <h2 className="text-xl font-semibold text-text">Lançamentos de {formatMonth(currentDate.toISOString())}</h2>
                     <div className="flex space-x-2">
                         {(['all', 'paid', 'pending', 'overdue'] as const).map((f) => (
                             <button
@@ -231,7 +231,7 @@ export default function DashboardPage() {
 
                                 return (
                                     <tr key={t.id} className="hover:bg-black/5 dark:hover:bg-white/5 transition-colors">
-                                        <td className="px-6 py-4 text-sm font-medium">
+                                        <td className="px-6 py-4 text-sm font-medium text-text">
                                             {formatDate(fixDate(t.dueDate as string).toISOString())}
                                         </td>
                                         <td className="px-6 py-4 text-sm">
@@ -260,7 +260,7 @@ export default function DashboardPage() {
                                         <td className="px-6 py-4 text-sm text-textMuted">
                                             {t.description}
                                         </td>
-                                        <td className="px-6 py-4 text-sm font-medium">
+                                        <td className="px-6 py-4 text-sm font-medium text-text">
                                             {formatCurrency(t.amount)}
                                         </td>
                                         <td className="px-6 py-4">

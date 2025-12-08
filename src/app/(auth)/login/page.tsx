@@ -72,7 +72,7 @@ export default function LoginPage() {
                         </div>
                     </div>
 
-                    <div className="flex justify-end -mt-4">
+                    <div className="flex justify-end mt-2 relative z-10">
                         <Link href="/forgot-password" className="text-sm text-primary hover:underline font-medium">
                             Esqueci a senha
                         </Link>

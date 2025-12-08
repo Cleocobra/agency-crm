@@ -92,13 +92,9 @@ export default function LoginPage() {
                 </form>
 
                 <div className="text-center mt-6">
-                    <button
-                        type="button"
-                        onClick={() => window.location.href = '/forgot-password'}
-                        className="text-sm text-primary hover:underline font-medium inline-flex items-center gap-1 p-2 bg-transparent border-none cursor-pointer"
-                    >
+                    <Link href="/forgot-password" className="text-sm text-primary hover:underline font-medium inline-flex items-center gap-1 p-2">
                         Esqueci a senha
-                    </button>
+                    </Link>
                 </div>
             </div>
         </div>

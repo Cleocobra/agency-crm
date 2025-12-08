@@ -5,8 +5,8 @@ export function middleware(request: NextRequest) {
     const auth = request.cookies.get('auth');
     const { pathname } = request.nextUrl;
 
-    // Se não estiver logado e tentar acessar qualquer página que não seja /login
-    if (!auth && pathname !== '/login') {
+    // Se não estiver logado e tentar acessar qualquer página que não seja /login ou /forgot-password
+    if (!auth && pathname !== '/login' && pathname !== '/forgot-password') {
         return NextResponse.redirect(new URL('/login', request.url));
     }
 

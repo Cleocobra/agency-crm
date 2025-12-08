@@ -231,20 +231,13 @@ export default function DashboardPage() {
 
                                 return (
                                     <tr key={t.id} className="hover:bg-black/5 dark:hover:bg-white/5 transition-colors">
-                                        <td className="px-6 py-4 text-sm font-medium">
+                                        <td className="px-6 py-4 text-sm font-medium text-text">
                                             {formatDate(fixDate(t.dueDate as string).toISOString())}
                                         </td>
-                                        <td className="px-6 py-4 text-sm text-textMuted">
+                                        <td className="px-6 py-4 text-sm">
                                             <div className="flex flex-col">
-                                                <div className="flex items-center gap-2">
-                                                    <span className="text-sm font-bold text-text">{clientName}</span>
-                                                    {isPrepaid && (
-                                                        <span className="px-1.5 py-0.5 rounded text-[10px] font-bold uppercase bg-purple-500/10 text-purple-400">
-                                                            Antecipado
-                                                        </span>
-                                                    )}
-                                                </div>
-                                                <div className="flex items-center gap-1 text-xs text-textMuted mt-0.5">
+                                                <span className="text-sm font-bold text-text">{clientName}</span>
+                                                <div className="flex items-center gap-2 mt-1">
                                                     <span className={clsx(
                                                         "px-1.5 py-0.5 rounded-full text-[10px] font-medium uppercase tracking-wide",
                                                         (t as any).client?.closer === 'commercial' ? "bg-purple-500/10 text-purple-400" :
@@ -254,15 +247,20 @@ export default function DashboardPage() {
                                                         {(t as any).client?.closer === 'commercial' ? 'Comercial' : (t as any).client?.closer === 'agency' ? 'Agência' : 'Parceiro'}
                                                     </span>
                                                     {(t as any).client?.closer === 'commercial' && (t as any).client?.salesperson?.name && (
-                                                        <span>• {(t as any).client.salesperson.name}</span>
+                                                        <span className="text-xs text-textMuted">• {(t as any).client.salesperson.name}</span>
+                                                    )}
+                                                    {isPrepaid && (
+                                                        <span className="px-1.5 py-0.5 rounded-full text-[10px] font-bold uppercase bg-purple-500/10 text-purple-400">
+                                                            Antecipado
+                                                        </span>
                                                     )}
                                                 </div>
                                             </div>
                                         </td>
-                                        <td className="px-6 py-4 text-sm text-textMuted">
+                                        <td className="px-6 py-4 text-sm text-text">
                                             {t.description}
                                         </td>
-                                        <td className="px-6 py-4 text-sm font-medium">
+                                        <td className="px-6 py-4 text-sm font-medium text-text">
                                             {formatCurrency(t.amount)}
                                         </td>
                                         <td className="px-6 py-4">

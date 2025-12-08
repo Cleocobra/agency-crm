@@ -109,16 +109,16 @@ export default function SalespeoplePage() {
     return (
         <div className="space-y-6">
             <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-                <h2 className="text-2xl font-bold text-text">Vendedores</h2>
+                <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100">Vendedores</h2>
 
                 <div className="flex items-center gap-4 w-full md:w-auto">
                     <div className="relative flex-1 md:flex-none">
-                        <Calendar className="absolute left-3 top-1/2 transform -translate-y-1/2 text-textMuted w-5 h-5" />
+                        <Calendar className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 dark:text-gray-400 w-5 h-5" />
                         <input
                             type="month"
                             value={selectedMonth}
                             onChange={(e) => setSelectedMonth(e.target.value)}
-                            className="pl-10 pr-4 py-2 bg-surface border border-border rounded-lg text-text focus:outline-none focus:ring-2 focus:ring-primary w-full md:w-auto"
+                            className="pl-10 pr-4 py-2 bg-surface border border-border rounded-lg text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-primary w-full md:w-auto"
                         />
                     </div>
 
@@ -144,8 +144,8 @@ export default function SalespeoplePage() {
                                     <User className="w-6 h-6" />
                                 </div>
                                 <div>
-                                    <h3 className="font-semibold text-text">{sp.name}</h3>
-                                    <div className="flex items-center gap-3 text-sm text-textMuted">
+                                    <h3 className="font-semibold text-gray-900 dark:text-gray-100">{sp.name}</h3>
+                                    <div className="flex items-center gap-3 text-sm text-gray-500 dark:text-gray-400">
                                         <span className="flex items-center gap-1">
                                             <Phone className="w-3 h-3" />
                                             {sp.phone || 'Sem telefone'}
@@ -158,21 +158,21 @@ export default function SalespeoplePage() {
 
                             <div className="flex items-center gap-6">
                                 <div className="text-right">
-                                    <p className="text-xs text-textMuted">
+                                    <p className="text-xs text-gray-500 dark:text-gray-400">
                                         Comissão ({format(parseISO(selectedMonth + '-01'), 'MMMM/yyyy', { locale: ptBR })})
                                     </p>
                                     <p className="text-lg font-bold text-green-500">{formatCurrency(sp.totalCommission)}</p>
                                 </div>
-                                {expandedSalespersonId === sp.id ? <ChevronUp className="w-5 h-5 text-textMuted" /> : <ChevronDown className="w-5 h-5 text-textMuted" />}
+                                {expandedSalespersonId === sp.id ? <ChevronUp className="w-5 h-5 text-gray-500 dark:text-gray-400" /> : <ChevronDown className="w-5 h-5 text-gray-500 dark:text-gray-400" />}
                             </div>
                         </div>
 
                         {expandedSalespersonId === sp.id && (
                             <div className="border-t border-border bg-black/5 dark:bg-black/20 p-4">
-                                <h4 className="text-sm font-semibold text-textMuted mb-3 uppercase tracking-wider">Detalhamento de Comissões</h4>
+                                <h4 className="text-sm font-semibold text-gray-500 dark:text-gray-400 mb-3 uppercase tracking-wider">Detalhamento de Comissões</h4>
                                 {sp.clientCommissions.length > 0 ? (
                                     <table className="w-full text-sm text-left">
-                                        <thead className="text-textMuted font-medium border-b border-border">
+                                        <thead className="text-gray-500 dark:text-gray-400 font-medium border-b border-border">
                                             <tr>
                                                 <th className="pb-2">Cliente</th>
                                                 <th className="pb-2">Receita (Mês)</th>
@@ -183,16 +183,16 @@ export default function SalespeoplePage() {
                                         <tbody className="divide-y divide-border">
                                             {sp.clientCommissions.map((c, idx) => (
                                                 <tr key={idx}>
-                                                    <td className="py-2 text-text">{c.clientName}</td>
-                                                    <td className="py-2 text-textMuted">{formatCurrency(c.revenue)}</td>
-                                                    <td className="py-2 text-textMuted">{c.commissionRate}%</td>
+                                                    <td className="py-2 text-gray-900 dark:text-gray-100">{c.clientName}</td>
+                                                    <td className="py-2 text-gray-500 dark:text-gray-400">{formatCurrency(c.revenue)}</td>
+                                                    <td className="py-2 text-gray-500 dark:text-gray-400">{c.commissionRate}%</td>
                                                     <td className="py-2 text-right font-medium text-green-500">{formatCurrency(c.commission)}</td>
                                                 </tr>
                                             ))}
                                         </tbody>
                                     </table>
                                 ) : (
-                                    <p className="text-sm text-textMuted italic">Nenhuma comissão gerada neste mês.</p>
+                                    <p className="text-sm text-gray-500 dark:text-gray-400 italic">Nenhuma comissão gerada neste mês.</p>
                                 )}
                             </div>
                         )}
@@ -200,7 +200,7 @@ export default function SalespeoplePage() {
                 ))}
 
                 {salespeopleStats.length === 0 && (
-                    <div className="text-center py-12 text-textMuted">
+                    <div className="text-center py-12 text-gray-500 dark:text-gray-400">
                         Nenhum vendedor cadastrado.
                     </div>
                 )}
@@ -210,32 +210,32 @@ export default function SalespeoplePage() {
             {isModalOpen && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
                     <div className="bg-surface border border-border w-full max-w-md rounded-xl shadow-2xl p-6">
-                        <h2 className="text-xl font-semibold text-text mb-4">Novo Vendedor</h2>
+                        <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-4">Novo Vendedor</h2>
                         <form onSubmit={handleCreateSalesperson} className="space-y-4">
                             <div>
-                                <label className="block text-sm font-medium text-textMuted mb-1">Nome</label>
+                                <label className="block text-sm font-medium text-gray-500 dark:text-gray-400 mb-1">Nome</label>
                                 <input
                                     type="text"
                                     required
                                     value={newName}
                                     onChange={(e) => setNewName(e.target.value)}
-                                    className="w-full bg-background border border-border rounded-lg px-4 py-2 text-text focus:outline-none focus:ring-2 focus:ring-primary"
+                                    className="w-full bg-background border border-border rounded-lg px-4 py-2 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-primary"
                                 />
                             </div>
                             <div>
-                                <label className="block text-sm font-medium text-textMuted mb-1">Telefone</label>
+                                <label className="block text-sm font-medium text-gray-500 dark:text-gray-400 mb-1">Telefone</label>
                                 <input
                                     type="text"
                                     value={newPhone}
                                     onChange={(e) => setNewPhone(e.target.value)}
-                                    className="w-full bg-background border border-border rounded-lg px-4 py-2 text-text focus:outline-none focus:ring-2 focus:ring-primary"
+                                    className="w-full bg-background border border-border rounded-lg px-4 py-2 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-primary"
                                 />
                             </div>
                             <div className="flex justify-end gap-3 pt-4">
                                 <button
                                     type="button"
                                     onClick={() => setIsModalOpen(false)}
-                                    className="px-4 py-2 text-textMuted hover:text-text transition-colors"
+                                    className="px-4 py-2 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition-colors"
                                 >
                                     Cancelar
                                 </button>

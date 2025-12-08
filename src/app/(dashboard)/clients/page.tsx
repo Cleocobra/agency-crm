@@ -113,21 +113,21 @@ export default function ClientsPage() {
     };
 
     if (loading) {
-        return <div className="p-8 text-center text-textMuted animate-pulse">Carregando clientes...</div>;
+        return <div className="p-8 text-center text-gray-500 dark:text-gray-400 animate-pulse">Carregando clientes...</div>;
     }
 
     return (
         <div className="space-y-6">
             <div className="flex justify-between items-center">
-                <h2 className="text-2xl font-bold text-text">Clientes</h2>
+                <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100">Clientes</h2>
                 <div className="relative">
-                    <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-textMuted w-5 h-5" />
+                    <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 dark:text-gray-400 w-5 h-5" />
                     <input
                         type="text"
                         placeholder="Buscar cliente..."
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
-                        className="pl-10 pr-4 py-2 bg-surface border border-border rounded-lg text-text focus:outline-none focus:ring-2 focus:ring-primary w-64 transition-all"
+                        className="pl-10 pr-4 py-2 bg-surface border border-border rounded-lg text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-primary w-64 transition-all"
                     />
                 </div>
             </div>
@@ -143,14 +143,14 @@ export default function ClientsPage() {
                                 </div>
                                 <div>
                                     <div className="flex items-center gap-2">
-                                        <h3 className="font-semibold text-text">{client.name}</h3>
+                                        <h3 className="font-semibold text-gray-900 dark:text-gray-100">{client.name}</h3>
                                         {client.totalContracts > 1 && (
                                             <span className="text-[10px] font-medium px-2 py-0.5 bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300 rounded-full">
                                                 {client.totalContracts} contratos
                                             </span>
                                         )}
                                     </div>
-                                    <div className="flex items-center gap-3 mt-1 text-xs text-textMuted">
+                                    <div className="flex items-center gap-3 mt-1 text-xs text-gray-500 dark:text-gray-400">
                                         <span className="flex items-center gap-1">
                                             <User className="w-3 h-3" />
                                             {client.closer === 'commercial' ? 'Comercial' : client.closer === 'agency' ? 'Agência' : 'Parceiro'}
@@ -165,10 +165,10 @@ export default function ClientsPage() {
                             <div className="flex items-center gap-6 md:border-l md:border-border md:pl-6">
                                 {/* Contract Info */}
                                 <div className="flex flex-col items-end min-w-[140px]">
-                                    <span className="text-xs text-textMuted mb-0.5">Vencimento</span>
+                                    <span className="text-xs text-gray-500 dark:text-gray-400 mb-0.5">Vencimento</span>
                                     {client.latestContract ? (
                                         <div className="flex items-center gap-2">
-                                            <span className="text-sm font-medium text-text">
+                                            <span className="text-sm font-medium text-gray-900 dark:text-gray-100">
                                                 {formatDate(client.latestContract.endDate)}
                                             </span>
                                             <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
@@ -177,7 +177,7 @@ export default function ClientsPage() {
                                                         href={client.latestContract.contractUrl}
                                                         target="_blank"
                                                         rel="noopener noreferrer"
-                                                        className="text-textMuted hover:text-primary p-0.5"
+                                                        className="text-gray-500 dark:text-gray-400 hover:text-primary p-0.5"
                                                         title="Ver Contrato"
                                                     >
                                                         <LinkIcon className="w-3 h-3" />
@@ -185,7 +185,7 @@ export default function ClientsPage() {
                                                 )}
                                                 <button
                                                     onClick={() => setEditingContract(client.latestContract)}
-                                                    className="text-textMuted hover:text-primary p-0.5"
+                                                    className="text-gray-500 dark:text-gray-400 hover:text-primary p-0.5"
                                                     title="Editar Valor/Contrato"
                                                 >
                                                     <Edit className="w-3 h-3" />
@@ -193,13 +193,13 @@ export default function ClientsPage() {
                                             </div>
                                         </div>
                                     ) : (
-                                        <span className="text-sm text-textMuted">-</span>
+                                        <span className="text-sm text-gray-500 dark:text-gray-400">-</span>
                                     )}
                                 </div>
 
                                 {/* LTV */}
                                 <div className="flex flex-col items-end min-w-[100px]">
-                                    <span className="text-xs text-textMuted mb-0.5">LTV</span>
+                                    <span className="text-xs text-gray-500 dark:text-gray-400 mb-0.5">LTV</span>
                                     <span className="text-sm font-bold text-green-500">
                                         {formatCurrency(client.ltv)}
                                     </span>
@@ -210,21 +210,21 @@ export default function ClientsPage() {
                             <div className="flex items-center gap-2 md:pl-4 md:border-l md:border-border">
                                 <button
                                     onClick={() => setEditingClient(client)}
-                                    className="p-2 text-textMuted hover:text-primary hover:bg-primary/10 rounded-lg transition-colors"
+                                    className="p-2 text-gray-500 dark:text-gray-400 hover:text-primary hover:bg-primary/10 rounded-lg transition-colors"
                                     title="Editar Cliente"
                                 >
                                     <Edit className="w-4 h-4" />
                                 </button>
                                 <button
                                     onClick={() => setRenewingClientId(client.id)}
-                                    className="p-2 text-textMuted hover:text-green-500 hover:bg-green-500/10 rounded-lg transition-colors"
+                                    className="p-2 text-gray-500 dark:text-gray-400 hover:text-green-500 hover:bg-green-500/10 rounded-lg transition-colors"
                                     title="Novo Contrato"
                                 >
                                     <PlusCircle className="w-4 h-4" />
                                 </button>
                                 <button
                                     onClick={() => handleDeleteClient(client.id)}
-                                    className="p-2 text-textMuted hover:text-red-500 hover:bg-red-500/10 rounded-lg transition-colors"
+                                    className="p-2 text-gray-500 dark:text-gray-400 hover:text-red-500 hover:bg-red-500/10 rounded-lg transition-colors"
                                     title="Excluir Cliente"
                                 >
                                     <Trash2 className="w-4 h-4" />
@@ -235,7 +235,7 @@ export default function ClientsPage() {
                 ))}
 
                 {filteredClients.length === 0 && (
-                    <div className="text-center py-12 text-textMuted bg-surface/50 border border-border/50 rounded-xl border-dashed">
+                    <div className="text-center py-12 text-gray-500 dark:text-gray-400 bg-surface/50 border border-border/50 rounded-xl border-dashed">
                         Nenhum cliente encontrado.
                     </div>
                 )}

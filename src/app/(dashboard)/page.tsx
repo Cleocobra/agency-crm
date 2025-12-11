@@ -193,7 +193,7 @@ export default function DashboardPage() {
             <div className="bg-surface rounded-xl border border-border overflow-hidden">
                 <div className="p-6 border-b border-border flex justify-between items-center">
                     <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100">Lançamentos de {formatMonth(currentDate.toISOString())}</h2>
-                    <div className="flex space-x-2">
+                    <div className="flex flex-wrap gap-2">
                         {(['all', 'paid', 'pending', 'overdue'] as const).map((f) => (
                             <button
                                 key={f}

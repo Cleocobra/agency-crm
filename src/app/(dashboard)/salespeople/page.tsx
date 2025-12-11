@@ -136,7 +136,7 @@ export default function SalespeoplePage() {
                 {salespeopleStats.map((sp) => (
                     <div key={sp.id} className="bg-surface border border-border rounded-xl overflow-hidden">
                         <div
-                            className="p-4 flex items-center justify-between cursor-pointer hover:bg-black/5 dark:hover:bg-white/5 transition-colors"
+                            className="p-4 flex flex-col md:flex-row md:items-center justify-between gap-4 cursor-pointer hover:bg-black/5 dark:hover:bg-white/5 transition-colors"
                             onClick={() => setExpandedSalespersonId(expandedSalespersonId === sp.id ? null : sp.id)}
                         >
                             <div className="flex items-center gap-4">
@@ -156,7 +156,7 @@ export default function SalespeoplePage() {
                                 </div>
                             </div>
 
-                            <div className="flex items-center gap-6">
+                            <div className="flex items-center justify-between w-full md:w-auto gap-6 ml-auto md:ml-0">
                                 <div className="text-right">
                                     <p className="text-xs text-gray-500 dark:text-gray-400">
                                         Comissão ({format(parseISO(selectedMonth + '-01'), 'MMMM/yyyy', { locale: ptBR })})
@@ -209,7 +209,7 @@ export default function SalespeoplePage() {
             {/* Modal Novo Vendedor */}
             {isModalOpen && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
-                    <div className="bg-surface border border-border w-full max-w-md rounded-xl shadow-2xl p-6">
+                    <div className="bg-surface border border-border w-full max-w-md mx-4 rounded-xl shadow-2xl p-6">
                         <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-4">Novo Vendedor</h2>
                         <form onSubmit={handleCreateSalesperson} className="space-y-4">
                             <div>

@@ -112,7 +112,7 @@ export const AddContractModal: React.FC<AddContractModalProps> = ({ isOpen, onCl
 
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
-            <div className="bg-surface border border-border w-full max-w-lg rounded-xl shadow-2xl overflow-hidden max-h-[90vh] overflow-y-auto">
+            <div className="bg-surface border border-border w-full max-w-lg mx-4 rounded-xl shadow-2xl overflow-hidden max-h-[90vh] overflow-y-auto">
                 <div className="flex justify-between items-center p-6 border-b border-border">
                     <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100">
                         {initialClientId ? 'Renovar / Novo Contrato' : 'Novo Cliente e Contrato'}
@@ -139,7 +139,7 @@ export const AddContractModal: React.FC<AddContractModalProps> = ({ isOpen, onCl
                                 />
                             </div>
 
-                            <div className="grid grid-cols-2 gap-4">
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div>
                                     <label className="block text-sm font-medium text-gray-500 dark:text-gray-400 mb-1">Origem do Lead</label>
                                     <select
@@ -168,7 +168,7 @@ export const AddContractModal: React.FC<AddContractModalProps> = ({ isOpen, onCl
                             </div>
 
                             {closer === 'commercial' && (
-                                <div className="grid grid-cols-2 gap-4 animate-fadeIn">
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 animate-fadeIn">
                                     <div>
                                         <label className="block text-sm font-medium text-gray-500 dark:text-gray-400 mb-1">Vendedor</label>
                                         <select
@@ -203,7 +203,7 @@ export const AddContractModal: React.FC<AddContractModalProps> = ({ isOpen, onCl
                     )}
 
                     {/* Contract Info */}
-                    <div className="grid grid-cols-2 gap-4">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
                             <label className="block text-sm font-medium text-gray-500 dark:text-gray-400 mb-1">Início do Contrato</label>
                             <input

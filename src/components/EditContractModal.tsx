@@ -72,7 +72,7 @@ export const EditContractModal: React.FC<EditContractModalProps> = ({ isOpen, on
 
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
-            <div className="bg-surface border border-border w-full max-w-md rounded-xl shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-200">
+            <div className="bg-surface border border-border w-full max-w-md mx-4 rounded-xl shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-200">
                 <div className="flex justify-between items-center p-6 border-b border-border bg-background/50">
                     <div>
                         <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100 flex items-center gap-2">
@@ -88,7 +88,7 @@ export const EditContractModal: React.FC<EditContractModalProps> = ({ isOpen, on
 
                 <form onSubmit={handleSubmit} className="p-6 space-y-5">
 
-                    <div className="grid grid-cols-2 gap-4">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div className="space-y-1.5">
                             <label className="block text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Início</label>
                             <div className="relative">
